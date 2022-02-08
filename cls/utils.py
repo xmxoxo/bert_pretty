@@ -39,9 +39,10 @@ def cls_text_feature(
 
 
 def cls_decoding(example_all, id2label, logits_all):
+    '''分类模型解码
+    '''
     formatted_outputs = []
     for (i, (text_raw, logits)) in enumerate(zip(example_all, logits_all)):
-        #label = get_tk_entities(text_raw,id2label,logits)
         if len(logits) > 1:
             logits = logits.argmax(axis=-1)
         label = id2label[logits]
@@ -49,16 +50,21 @@ def cls_decoding(example_all, id2label, logits_all):
     return formatted_outputs
 
 def load_labels(label_file_or_list):
+    ''' 加载标签字典
+    '''
     if isinstance(label_file_or_list,list):
         labels = label_file_or_list
     else:
         with open(label_file_or_list, mode='r', encoding='utf-8') as f:
             lines = f.readlines()
-        labels = []
+        funflt = lambda x: x.replace('\r\n', '').replace('\n', '')
+        labels = filter(funflt, lines)
+        '''
         for line in lines:
             line = line.replace('\r\n', '')
             line = line.replace('\n', '')
             if line == '':
                 continue
             labels.append(line)
+        '''
     return labels
