@@ -103,16 +103,13 @@ print(feat)
 labels = ['标签1','标签2']
 print(ner.load_label_bio(labels))
 
-# def ner_decoding(example_all, id2label, logits_all,trans=None)
+# def ner_decoding(example_all, id2label, logits_all,trans=None) #解析crf序列  or 解析 已经解析过的crf序列
 '''
     example_all 文本list ,
     id2label 标签 list or dict
     logits_all 为bert 预测结果 (batch,seq_len,num_tags) or (batch,seq_len)
-    trans 是否启用trans预测 , 2D
-    解析crf序列  or 解析 已经解析过的crf序列
-
+    trans 是否启用trans预测 , (num_tags,num_tags)
 '''
-
 
 #ner_pointer_decoding(example_all, id2label, logits_all,threshold=0.):
 '''
@@ -125,10 +122,18 @@ print(ner.load_label_bio(labels))
 
 
 
+#  cls.cls_decoding(example_all,labels,logits) #分类解码
+'''
+   example_all 文本list ,
+   id2label 标签 list or dict
+   logits_all (batch,hidden)
+   threshold 阈值
+
+'''
 
 
 
-# relation.re_decoding(example_all, id2spo, logits_all)  #关旭
+# relation.re_decoding(example_all, id2spo, logits_all)  #关系解码
 
 
 ```
